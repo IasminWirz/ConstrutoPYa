@@ -21,6 +21,11 @@ def dividir(numero1, numero2):
     else:
         return 'Não dividirás por zero'
 
+def dividir_try_except(numero1, numero2):
+    try:
+        return numero1 / numero2
+    except:
+        return 'Não dividirás por zero'
 # Testes Unitários / teste de unidade
 
     # teste da função somar
@@ -44,7 +49,10 @@ def test_somar_didatico():
 ])
 
 def test_somar(numero1, numero2, resultado):
-    assert somar(numero1, numero2) == resultado
+    try:
+        assert somar(numero1, numero2) == resultado
+    except AssertionError:
+        print(f'Entrou no Except: {AssertionError}')
 
 def test_somar_resultado_negativo():
     assert somar(-1000,-2000) == -3000
@@ -57,6 +65,21 @@ def test_multiplicar():
 
 def test_dividir():
     assert dividir(8,4) == 2
+
+def test_dividir_por_zero():
+    assert dividir(8, 0) == 'Não dividirás por zero'
+
+@pytest.mark.parametrize('numero1, numero2, resultado', [
+        (8, 2, 4),
+        (20, 4, 5),
+        (10, 0, 'Não dividirás por zero'),
+])
+
+def test_dividir_try_execpt(numero1, numero2, resultado):
+    assert dividir_try_except(numero1, numero2) == resultado
+    #teste positivo --> mostrar o resultado correto
+    #               --> avançar para a proxíma etapa
+    #teste negativo --> mostrar a mensagem de erro
 
 # Dia 1 : 100 testes : 0 passaram
 # Dia 2 : 100 testes : 5 passaram
