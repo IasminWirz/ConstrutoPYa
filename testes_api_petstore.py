@@ -67,7 +67,7 @@ def testar_alterar_usuario():
     headers = {'Content-Type': 'application/json'}
 
     #Executa
-    resposta = requests.put(url=f'{url}{user}',
+    resposta = requests.put(url=f'{url}/{user}',
                              data=open('json/usuario2.json', 'rb'),
                              headers=headers
                              )
@@ -83,4 +83,23 @@ def testar_alterar_usuario():
     assert corpo_da_resposta['message'] == mensagem_esperada
 
 def testar_excluir_usuario():
-    
+    # Configura
+    username = 'Ias'  # input / entrada para a exclusão e retorno na resposta
+    tipo_esperado = 'unknown'
+    status_code_esperado = 200  # Comunicação
+
+    headers = {'Content-Type': 'application/json'}
+
+    # Executa
+    resposta = requests.delete(f'{url}/{username}', headers=headers)
+
+    corpo_da_resposta = resposta.json()
+    print(resposta)  # Status Code
+    print(resposta.status_code)  # Status Code
+    print(resposta.json())  # Response Body / Corpo da resposta
+
+    # Valida
+    assert resposta.status_code == status_code_esperado
+    assert corpo_da_resposta['code'] == status_code_esperado
+    assert corpo_da_resposta['type'] == tipo_esperado
+    assert corpo_da_resposta['message'] == username
