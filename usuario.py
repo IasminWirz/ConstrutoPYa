@@ -84,14 +84,14 @@ def testar_dados_usuarios(id, nome, sobrenome, email):    # função que testa a
         print('id:{} \n nome:{} \n sobrenome:{} \n email:{}'.format(id_obtido, nome_obtido, sobrenome_obtido, email_obtido))
         print(json.dumps(jsonResponse, indent=2, sort_keys=True))
 
-        assert id_obtido == id
+        assert id_obtido == int (id)
         assert  nome_obtido == nome
         assert sobrenome_obtido == sobrenome
         assert  email_obtido == email
 
-    except HTTPError as http_fail :
+    except HTTPError as http_fail :     #Para o ISTQB, descobriu rodando é falha
         print(f'um erro de http aconteceu: {http_fail}')
-    except Exception as fail:           # Qualquer exceção será tratada a seguir
+    except Exception as fail:           #Qualquer exceção será tratada a seguir
         print(f'Falha inesperada: {fail}')
 
 
